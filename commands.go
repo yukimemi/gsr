@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 
@@ -46,7 +47,8 @@ var GlobalAction = func(c *cli.Context) error {
 		root string
 		opt  file.Option
 
-		wg = new(sync.WaitGroup)
+		wg  = new(sync.WaitGroup)
+		sem = make(chan struct{}, runtime.NumCPU())
 	)
 
 	if c.NArg() > 0 {
@@ -87,15 +89,27 @@ var GlobalAction = func(c *cli.Context) error {
 			continue
 		}
 		gs := GitStatus{Path: filepath.Dir(info.Path)}
-		wg.Add(1)
-		go func(gs GitStatus) {
-			defer wg.Done()
+		select {
+		case sem <- struct{}{}:
+			// Async.
+			wg.Add(1)
+			go func(gs GitStatus) {
+				defer wg.Done()
+				if err := gs.GetStatus(c); err != nil {
+					fmt.Fprintln(os.Stderr, err)
+					return
+				}
+				gs.Print(c)
+				<-sem
+			}(gs)
+		default:
+			// Sync.
 			if err := gs.GetStatus(c); err != nil {
 				fmt.Fprintln(os.Stderr, err)
-				return
+			} else {
+				gs.Print(c)
 			}
-			gs.Print(c)
-		}(gs)
+		}
 	}
 
 	wg.Wait()
