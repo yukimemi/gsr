@@ -73,7 +73,6 @@ var GlobalAction = func(c *cli.Context) error {
 
 	if !file.IsExistDir(root) {
 		msg := fmt.Sprintf("[%v] is not exist", root)
-		fmt.Fprintln(os.Stderr, msg)
 		return fmt.Errorf(msg)
 	}
 
