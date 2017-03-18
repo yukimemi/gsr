@@ -44,16 +44,17 @@ var GlobalAction = func(c *cli.Context) error {
 	var (
 		err  error
 		root string
+		opt  file.Option
 
-		wg  = new(sync.WaitGroup)
-		opt = file.Option{
-			Matches: []string{`\.git$`},
-			Recurse: true,
-		}
+		wg = new(sync.WaitGroup)
 	)
 
 	if c.NArg() > 0 {
 		root = c.Args().First()
+		opt = file.Option{
+			Matches: []string{`\.git$`},
+			Recurse: true,
+		}
 	} else {
 		cmd := core.Cmd{Cmd: exec.Command("ghq", "root")}
 		err = cmd.CmdRun()
@@ -62,6 +63,10 @@ var GlobalAction = func(c *cli.Context) error {
 			return err
 		}
 		root = strings.TrimRight(cmd.Stdout.String(), "\n")
+		opt = file.Option{
+			Matches: []string{`\.git$`},
+			Depth:   4,
+		}
 	}
 
 	if !file.IsExistDir(root) {
