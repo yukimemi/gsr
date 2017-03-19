@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"sync"
@@ -18,6 +19,8 @@ import (
 type GitStatus struct {
 	Path   string
 	Diff   bool
+	Ahead  bool
+	Behind bool
 	Status string
 }
 
@@ -30,13 +33,25 @@ var (
 			Usage:  "Show status",
 		},
 		cli.BoolFlag{
+			EnvVar: "GSR_SHOW_AHEAD",
+			Name:   "ahead",
+			Usage:  "Show ahead repo",
+		},
+		cli.BoolFlag{
+			EnvVar: "GSR_SHOW_BEHIND",
+			Name:   "behind",
+			Usage:  "Show behind repo",
+		},
+		cli.BoolFlag{
 			EnvVar: "GSR_SHOW_ALL",
 			Name:   "all",
 			Usage:  "Show all directry",
 		},
 	}
 
-	mu = new(sync.Mutex)
+	mu       = new(sync.Mutex)
+	aheadRe  = regexp.MustCompile(`\[ahead`)
+	behindRe = regexp.MustCompile(`\[behind`)
 )
 
 // GlobalAction is Global gsr command.
@@ -145,6 +160,22 @@ func (gs *GitStatus) GetStatus(c *cli.Context) error {
 		gs.Status = cmd.Stdout.String()
 	}
 
+	if c.Bool("ahead") || c.Bool("behind") {
+		cmd := core.Cmd{Cmd: exec.Command("git", "status", "--porcelain", "--branch")}
+		cmd.Cmd.Dir = gs.Path
+		err = cmd.CmdRun()
+		if err != nil {
+			return err
+		}
+		stdOut := cmd.Stdout.String()
+		if aheadRe.MatchString(stdOut) {
+			gs.Ahead = true
+		}
+		if behindRe.MatchString(stdOut) {
+			gs.Behind = true
+		}
+	}
+
 	return nil
 }
 
@@ -164,6 +195,12 @@ func (gs *GitStatus) Print(c *cli.Context) {
 		fmt.Println(gs.Path)
 		printStatus()
 	} else if gs.Diff {
+		fmt.Println(gs.Path)
+		printStatus()
+	} else if c.Bool("ahead") && gs.Ahead {
+		fmt.Println(gs.Path)
+		printStatus()
+	} else if c.Bool("behind") && gs.Behind {
 		fmt.Println(gs.Path)
 		printStatus()
 	}
