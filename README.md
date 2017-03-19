@@ -1,18 +1,45 @@
 # gsr
 
-Git status recurse.
-
-
-## Description
+Run git status recursively.
 
 ## Usage
+
+By default, display only repositories with differences.
+
+```bash
+$ gsr path/to/dir
+path/to/dir/repo1
+path/to/dir/repo3
+```
+
+Show status with `--status` option.
+
+```bash
+$ gsr --status path/to/dir
+path/to/dir/repo1
+## master...origin/master
+ M .gitignore
+
+path/to/dir/repo3
+## dev
+ M cmd/root.go
+```
+
+If you use [motemen/ghq](https://github.com/motemen/ghq) , you can omit arguments.
+
+```bash
+$ gsr
+/Users/yukimemi/.ghq/src/github.com/yukimemi/gsr
+/Users/yukimemi/.ghq/src/github.com/yukimemi/core
+```
+
 
 ## Install
 
 To install, use `go get`:
 
 ```bash
-$ go get -d github.com/yukimemi/gsr
+$ go get github.com/yukimemi/gsr
 ```
 
 ## Contribution

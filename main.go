@@ -13,7 +13,7 @@ func main() {
 	app.Version = Version
 	app.Author = "yukimemi"
 	app.Email = "yukimemi@gmail.com"
-	app.Usage = "gsr [OPTION] [PATH]"
+	app.Usage = "Run git status recursively"
 
 	app.Flags = GlobalFlags
 	app.Action = GlobalAction
