@@ -136,7 +136,7 @@ func (gs *GitStatus) GetStatus(c *cli.Context) error {
 	}
 
 	if c.Bool("status") {
-		cmd := core.Cmd{Cmd: exec.Command("git", "status", "--short")}
+		cmd := core.Cmd{Cmd: exec.Command("git", "status", "--porcelain", "--branch")}
 		cmd.Cmd.Dir = gs.Path
 		err = cmd.CmdRun()
 		if err != nil {
