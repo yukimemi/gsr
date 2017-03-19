@@ -50,8 +50,8 @@ var (
 	}
 
 	mu       = new(sync.Mutex)
-	aheadRe  = regexp.MustCompile(`\[ahead`)
-	behindRe = regexp.MustCompile(`\[behind`)
+	aheadRe  = regexp.MustCompile(`\[.*ahead.*\]`)
+	behindRe = regexp.MustCompile(`\[.*behind.*\]`)
 )
 
 // GlobalAction is Global gsr command.
