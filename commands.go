@@ -30,22 +30,22 @@ var (
 		cli.BoolFlag{
 			EnvVar: "GSR_SHOW_STATUS",
 			Name:   "status",
-			Usage:  "Show status",
+			Usage:  "show status",
 		},
 		cli.BoolFlag{
 			EnvVar: "GSR_SHOW_AHEAD",
 			Name:   "ahead",
-			Usage:  "Show ahead repo",
+			Usage:  "show ahead repo",
 		},
 		cli.BoolFlag{
 			EnvVar: "GSR_SHOW_BEHIND",
 			Name:   "behind",
-			Usage:  "Show behind repo",
+			Usage:  "show behind repo",
 		},
 		cli.BoolFlag{
 			EnvVar: "GSR_SHOW_ALL",
 			Name:   "all",
-			Usage:  "Show all directry",
+			Usage:  "show all directry",
 		},
 		cli.HelpFlag,
 	}
