@@ -15,6 +15,7 @@ func main() {
 	app.Email = "yukimemi@gmail.com"
 	app.Usage = "Run git status recursively"
 
+	app.HideHelp = true
 	app.Flags = GlobalFlags
 	app.Action = GlobalAction
 	app.Run(os.Args)

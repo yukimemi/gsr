@@ -47,6 +47,7 @@ var (
 			Name:   "all",
 			Usage:  "Show all directry",
 		},
+		cli.HelpFlag,
 	}
 
 	mu       = new(sync.Mutex)
@@ -65,6 +66,11 @@ var GlobalAction = func(c *cli.Context) error {
 		wg  = new(sync.WaitGroup)
 		sem = make(chan struct{}, runtime.NumCPU())
 	)
+
+	if c.Bool("help") {
+		cli.ShowAppHelp(c)
+		return cli.NewExitError("", 2)
+	}
 
 	if c.NArg() > 0 {
 		root = c.Args().First()
@@ -88,7 +94,7 @@ var GlobalAction = func(c *cli.Context) error {
 
 	if !file.IsExistDir(root) {
 		msg := fmt.Sprintf("[%v] is not exist", root)
-		return fmt.Errorf(msg)
+		return cli.NewExitError(msg, 1)
 	}
 
 	dirs, err := file.GetDirs(root, opt)
