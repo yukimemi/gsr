@@ -13,13 +13,6 @@ build:
         go version
         ls -la
 
-    # Set git config
-    - script:
-      name: git config
-      code: |
-        git config --global user.name yukimemi
-        git config --global user.email yukimemi@gmail.com
-
     # Gets the dependencies
     - script:
       name: go get
@@ -38,8 +31,13 @@ build:
       code: |
         compile
 
-deploy:
-  steps:
+    # Set git config
+    - script:
+      name: git config
+      code: |
+        git config --global user.name yukimemi
+        git config --global user.email yukimemi@gmail.com
+
     # Release to github
     - script:
       name: ghr release
