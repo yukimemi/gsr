@@ -1,0 +1,13 @@
+{
+    "dependencies": {
+        "github.com/urfave/cli": {
+            "branch": "master"
+        },
+        "github.com/yukimemi/core": {
+            "branch": "master"
+        },
+        "github.com/yukimemi/file": {
+            "branch": "master"
+        }
+    }
+}
