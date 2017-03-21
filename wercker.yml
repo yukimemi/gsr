@@ -1,0 +1,48 @@
+box: yukimemi/golang-ghr
+
+build:
+  steps:
+    # Sets the go workspace and places you package
+    # at the right place in the workspace tree
+    - setup-go-workspace
+
+    # Verbose
+    - script:
+      name: go version
+      code: |
+        go version
+        ls -la
+
+    # Set git config
+    - script:
+      name: git config
+      code: |
+        git config --global user.name yukimemi
+        git config --global user.email yukimemi@gmail.com
+
+    # Gets the dependencies
+    - script:
+      name: go get
+      code: |
+        go get
+
+    # Test the project
+    - script:
+      name: go test
+      code: |
+        go test ./...
+
+    # Cross compile
+    - script:
+      name: cross compile
+      code: |
+        compile
+
+deploy:
+  steps:
+    # Release to github
+    - script:
+      name: ghr release
+      code: |
+        release
+
