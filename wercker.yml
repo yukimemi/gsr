@@ -15,15 +15,15 @@ build:
 
     # Gets the dependencies
     - script:
-      name: dep ensure
+      name: glide install
       code: |
-        dep ensure
+        glide install
 
     # Test the project
     - script:
       name: go test
       code: |
-        go test ./...
+        go test $(glide novendor)
 
     # Cross compile
     - script:
