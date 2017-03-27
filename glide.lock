@@ -1,5 +1,5 @@
-hash: 5b3bab0f0b69989e2c8b766d66d041aea2bc7336a1325b1eae7cd3475fb1538c
-updated: 2017-03-22T00:48:23.410545576+09:00
+hash: 3371f3685720fd3a8c07360c73ca27e59a7b93135c25a1da84d059bd3132f9f7
+updated: 2017-03-27T18:33:23.282556419+09:00
 imports:
 - name: github.com/urfave/cli
   version: 9e5b04886c4bfee2ceba1465b8121057355c4e53
@@ -8,7 +8,7 @@ imports:
 - name: github.com/yukimemi/file
   version: 4ee67f5845c064c31984662e5e997fb6f61148b7
 - name: golang.org/x/text
-  version: f28f36722d5ef2f9655ad3de1f248e3e52ad5ebd
+  version: fc7fa097411d30e6708badff276c4c164425590c
   subpackages:
   - encoding
   - encoding/internal/identifier

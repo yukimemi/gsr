@@ -1,8 +1,5 @@
 package: github.com/yukimemi/gsr
 import:
 - package: github.com/urfave/cli
-  version: master
 - package: github.com/yukimemi/core
-  version: master
 - package: github.com/yukimemi/file
-  version: master
