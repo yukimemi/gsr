@@ -156,10 +156,14 @@ func (gs *GitStatus) GetStatus(c *cli.Context) error {
 		gs.Diff = true
 	}
 
-	if c.Bool("status") {
+	checkStatus := func() (*core.Cmd, error) {
 		cmd := core.Cmd{Cmd: exec.Command("git", "status", "--porcelain", "--branch")}
 		cmd.Cmd.Dir = gs.Path
-		err = cmd.CmdRun()
+		return &cmd, cmd.CmdRun()
+	}
+
+	if c.Bool("status") {
+		cmd, err := checkStatus()
 		if err != nil {
 			return err
 		}
@@ -167,9 +171,7 @@ func (gs *GitStatus) GetStatus(c *cli.Context) error {
 	}
 
 	if c.Bool("ahead") || c.Bool("behind") {
-		cmd := core.Cmd{Cmd: exec.Command("git", "status", "--porcelain", "--branch")}
-		cmd.Cmd.Dir = gs.Path
-		err = cmd.CmdRun()
+		cmd, err := checkStatus()
 		if err != nil {
 			return err
 		}
@@ -179,6 +181,26 @@ func (gs *GitStatus) GetStatus(c *cli.Context) error {
 		}
 		if behindRe.MatchString(stdOut) {
 			gs.Behind = true
+		}
+
+		if !gs.Ahead && !gs.Behind {
+			cmd := core.Cmd{Cmd: exec.Command("git", "fetch")}
+			cmd.Cmd.Dir = gs.Path
+			err = cmd.CmdRun()
+			if err != nil {
+				return err
+			}
+			st, err := checkStatus()
+			if err != nil {
+				return err
+			}
+			stdOut := st.Stdout.String()
+			if aheadRe.MatchString(stdOut) {
+				gs.Ahead = true
+			}
+			if behindRe.MatchString(stdOut) {
+				gs.Behind = true
+			}
 		}
 	}
 
