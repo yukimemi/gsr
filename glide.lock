@@ -1,14 +1,24 @@
 hash: 3371f3685720fd3a8c07360c73ca27e59a7b93135c25a1da84d059bd3132f9f7
-updated: 2017-03-27T18:33:23.282556419+09:00
+updated: 2017-05-08T10:09:41.670993057+09:00
 imports:
+- name: github.com/k0kubun/pp
+  version: d1532fc5d94ecdf2da29e24d7b99721f3287de4a
+- name: github.com/mattn/go-colorable
+  version: ded68f7a9561c023e790de24279db7ebf473ea80
+- name: github.com/mattn/go-isatty
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/urfave/cli
-  version: 9e5b04886c4bfee2ceba1465b8121057355c4e53
+  version: d70f47eeca3afd795160003bc6e28b001d60c67c
 - name: github.com/yukimemi/core
-  version: b04fe0ed0fc1467d1c157712c2ef0befb075fb6a
+  version: 8ed71579d1dddf6a5b337daf760cebf5e6bb97ef
 - name: github.com/yukimemi/file
-  version: 4ee67f5845c064c31984662e5e997fb6f61148b7
+  version: 7f1789aa04de66e482d89d6466779c5888fd919c
+- name: golang.org/x/sys
+  version: 9ccfe848b9db8435a24c424abbc07a921adf1df5
+  subpackages:
+  - unix
 - name: golang.org/x/text
-  version: fc7fa097411d30e6708badff276c4c164425590c
+  version: 470f45bf29f4147d6fbd7dfd0a02a848e49f5bf4
   subpackages:
   - encoding
   - encoding/internal/identifier
