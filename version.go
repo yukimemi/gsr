@@ -4,4 +4,4 @@ package main
 const Name string = "gsr"
 
 // Version is gsr version.
-const Version string = "0.4.0"
+const Version string = "0.4.1"

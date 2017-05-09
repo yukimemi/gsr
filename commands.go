@@ -169,6 +169,9 @@ func (gs *GitStatus) GetStatus(c *cli.Context) error {
 	printStd := func(cmd *core.Cmd) {
 		mu.Lock()
 		defer mu.Unlock()
+		if cmd.Stderr.String() != "" || cmd.Stdout.String() != "" {
+			fmt.Println(cmd.Cmd.Dir)
+		}
 		if cmd.Stderr.String() != "" {
 			fmt.Println(cmd.Stderr.String())
 		}
